@@ -33,7 +33,7 @@ export const createUser = async (req, res) => {
     try {
         const { first_name, last_name, email, password } = req.body
         if(first_name == undefined || last_name == undefined || email == undefined || password == undefined){
-            res.status(400).send("Deben cargarse todos los datos")
+            res.status(400).send("Data must be complete")
         }
         let message = await userModel.create({first_name, last_name, email, password})
         res.status(201).send(message)

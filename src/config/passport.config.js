@@ -1,3 +1,4 @@
+import "dotenv/config"
 import passport from "passport";
 import local from "passport-local"
 import GithubStrategy from "passport-github"
@@ -13,7 +14,6 @@ const cookieExtractor = (req) => {
     let token = null
     if(req.cookies){
         token = req.cookies["sessionToken"]
-
     }
     return token
 }
@@ -82,10 +82,9 @@ const initPassport = () => {
 
     passport.use("jwt", new JWTStrategy({
         jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
-        secretOrKey: "secretKey"
+        secretOrKey: process.env.SECRET_JWT
     }, (jwt_payload, done) => {
         try {
-            console.log(jwt_payload);
             return done(null, jwt_payload)            
         } catch (error) {
             return done(error)
